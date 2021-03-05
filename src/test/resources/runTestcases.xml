@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="E-KYC-MOBILE" parallel="false" thread-count="3">
+    <listeners>
+        <listener class-name="commons.MethodListener"/>
+    </listeners>
+    <test name="Run on ANDROID">
+        <parameter name="url" value="http://127.0.0.1:4723/wd/hub"/>
+        <parameter name="platformName" value="Android"/>
+        <classes>
+            <class name="testcases.Demo"/>
+        </classes>
+    </test>
+
+</suite>
