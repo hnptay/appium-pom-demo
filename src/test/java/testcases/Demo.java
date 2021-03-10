@@ -30,20 +30,52 @@ public class Demo extends BaseTest {
 
     @Description("Demo_01")
     @Severity(SeverityLevel.CRITICAL)
-    @Test
+    //@Test
     public void TC_01_demo() {
-        log.info("Open Demo APP");
+        log.info("Open APP");
         demoPage.clickToDemosView();
-//        demoPage.clickToWebViews("WebView");
-//        demoPage.clickToAccept();
-//        demoPage.clickToGotItButton();
-//        demoPage.clickToGotItButton();
-//        demoPage.clickToSearchBar();
-//        demoPage.sendKeysToSearchBar("https://demo.nopcommerce.com/");
-//        demoPage.pressToEnterKey();
-//        sleepInSecond(5);
-//        demoPage.clickToVoteButton();
-        demoPage.scrollDown(BasePage.Direction.DOWN, 50, 3);
+        demoPage.clickToWebViews("WebView");
+        demoPage.clickToAccept();
+        demoPage.clickToGotItButton();
+        demoPage.clickToGotItButton();
+        demoPage.clickToSearchBar();
+        demoPage.sendKeysToSearchBar("https://demo.nopcommerce.com/");
+        demoPage.pressToEnterKey();
+        demoPage.scrollDown(BasePage.Direction.DOWN, 10, 4);
+        sleepInSecond(3);
+    }
+
+    //@Test
+    public void TC_02_zoom(){
+        log.info("OPEN APP");
+        demoPage.photoClickDynamic("ALLOW");
+        demoPage.photoClickDynamic("GET STARTED");
+        demoPage.photoClickDynamic("NO THANKS");
+        demoPage.photoClickToImage();
+        demoPage.zoomOut(BasePage.Direction.ZOOM_OUT);
+        sleepInSecond(5);
+    }
+
+    @Test
+    public void TC_03_zoom(){
+        log.info("OPEN APP");
+        demoPage.clickToMapAccept();
+        sleepInSecond(3);
+        demoPage.zoomOut(BasePage.Direction.ZOOM_OUT);
+        sleepInSecond(3);
+        demoPage.zoomIn(BasePage.Direction.ZOOM_IN);
+        sleepInSecond(3);
+    }
+
+    //@Test
+    public void TC_04_swagLabs(){
+        log.info("OPEN APP");
+        demoPage.clickToStandardUser();
+        demoPage.clickToLogin();
+        demoPage.clickToBackpack();
+        demoPage.scrollDown(BasePage.Direction.DOWN, 1000, 1);
+        sleepInSecond(3);
+        demoPage.zoomOut(BasePage.Direction.ZOOM_OUT);
         sleepInSecond(3);
     }
 

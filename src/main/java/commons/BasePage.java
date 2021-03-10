@@ -2,6 +2,7 @@ package commons;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
+import io.appium.java_client.MultiTouchAction;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.nativekey.AndroidKey;
@@ -58,6 +59,10 @@ public abstract class BasePage {
 
     protected void clickToElement(AppiumDriver<MobileElement> driver, String locator) {
         findElementByXpath(driver, locator).click();
+    }
+
+    protected void clickToElement(AppiumDriver<MobileElement> driver, String locator, String... values) {
+        findElementByXpath(driver, formatLocator(locator, values)).click();
     }
 
     protected void sendKeysToElement(AppiumDriver<MobileElement> driver, String locator, String value) {
@@ -178,8 +183,63 @@ public abstract class BasePage {
         }
     }
 
+    protected void zoom(AppiumDriver<MobileElement> driver, Direction direction) {
+        Dimension size = driver.manage().window().getSize();
+        TouchAction tUP = new TouchAction<>(driver);
+        TouchAction tDown = new TouchAction<>(driver);
+        MultiTouchAction mt = new MultiTouchAction(driver);
+
+        int startXup = 0;
+        int endXup = 0;
+        int startYup = 0;
+        int endYup = 0;
+
+        int startXdown = 0;
+        int endXdown = 0;
+        int startYdown = 0;
+        int endYdown = 0;
+
+        switch (direction) {
+            case ZOOM_OUT:
+                endYup = (int) (size.height * 0.20);
+                startYup = (int) (size.height * 0.45);
+                startXup = (size.width / 2);
+                tUP.longPress(PointOption.point(startXup, startYup))
+                        .waitAction(WaitOptions.waitOptions(Duration.ofMillis(1000)))
+                        .moveTo(PointOption.point(startXup, endYup)).release();
+
+                endYdown = (int) (size.height * 0.80);
+                startYdown = (int) (size.height * 0.55);
+                startXdown = (size.width / 2);
+                tDown.longPress(PointOption.point(startXdown, startYdown))
+                        .waitAction(WaitOptions.waitOptions(Duration.ofMillis(1000)))
+                        .moveTo(PointOption.point(startXdown, endYdown)).release();
+                mt.add(tUP).add(tDown).perform();
+
+                break;
+
+            case ZOOM_IN:
+                endYup = (int) (size.height * 0.55);
+                startYup = (int) (size.height * 0.80);
+                startXup = (size.width / 2);
+                tUP.press(PointOption.point(startXup, startYup))
+                        .waitAction(WaitOptions.waitOptions(Duration.ofMillis(500)))
+                        .moveTo(PointOption.point(startXup, endYup)).release();
+
+                endYdown = (int) (size.height * 0.45);
+                startYdown = (int) (size.height * 0.20);
+                startXdown = (size.width / 2);
+                tDown.longPress(PointOption.point(startXdown, startYdown))
+                        .waitAction(WaitOptions.waitOptions(Duration.ofMillis(500)))
+                        .moveTo(PointOption.point(startXdown, endYdown)).release();
+                mt.add(tUP).add(tDown).perform();
+
+                break;
+        }
+    }
+
     public enum Direction {
-        DOWN, UP, LEFT, RIGHT;
+        DOWN, UP, LEFT, RIGHT, ZOOM_IN, ZOOM_OUT;
     }
 
     //Android keyboard
